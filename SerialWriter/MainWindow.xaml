@@ -1,0 +1,46 @@
+﻿<Window x:Class="SerialWriter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SerialWriter"
+        mc:Ignorable="d"
+        Title="Serial Tester"  Width="900" Height="630">
+    <StackPanel Orientation="Vertical">
+        <StackPanel  Orientation="Horizontal"  HorizontalAlignment="Left" Height="50" Margin="0,0,0,0" VerticalAlignment="Top" Width="{Binding ActualWidth, ElementName=parentElementName}">
+            <Label Content="Port:" Height="25" Margin="20,0,0,0"/>
+            <ComboBox x:Name="portComboBox" 
+                      ItemsSource="{Binding Path=PortList}"
+                      DisplayMemberPath="Name"
+            SelectedValuePath="Name"
+            SelectedValue="{Binding Path=Port}" SelectionChanged="portComboBox_SelectionChanged" Width="100" Height="25" Margin="0,0,10,0"/>
+            <Button x:Name="openFileButton" Content="Select file" Click="openFileButton_Click" Width="80" Height="25" Margin="20,0,10,0"/>
+            <TextBox x:Name="fileNameTextBox" Text="{Binding Path=FileNotPath, Mode=OneWay}" Width="180" Height="20"></TextBox>
+            <Label Content="Delay:" Height="25"/>
+            <TextBox x:Name="delayTextBox"  Text="{Binding Path=Delay}" Width="80" Height="20" Margin="0,0,10,0"/>
+            <Button x:Name="replyButton" Content="Replay file" Width="80" Height="25" Margin="0,0,10,0" Click="replyButton_Click"  />
+            <Button x:Name="stopButton" Content="Stop replay" Width="80" Height="25" Margin="0,0,10,0" Click="stopButton_Click" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"  DockPanel.Dock="Top" Height="40">
+            <TextBox x:Name="messageTextBox"  TextWrapping="Wrap" VerticalAlignment="Top" Width="600" Height="25" Margin="20,5,10,0"  />
+            <Button x:Name="button" Content="Send"  
+                    Click="button_Click" IsDefault="True" Width="80" Height="25"/>
+        </StackPanel>
+        <StackPanel   Orientation="Vertical" Width="{Binding ActualWidth, ElementName=parentElementName}">
+            <TextBox x:Name="fileMessageTextBox"  
+                     TextWrapping="Wrap" Height="200" 
+                         ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                     Text="{Binding Path=ReplyText, Mode=OneWayToSource, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" 
+                         Width="{Binding ActualWidth, ElementName=parentElementName}" 
+                         Background="#FF9ED6A6" Margin="20,5"/>
+            <TextBox x:Name="replyTextBox"  
+                     TextWrapping="Wrap" Height="200"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                     Text="{Binding Path=ReplyText, Mode=OneWayToSource, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" 
+                         Width="{Binding ActualWidth, ElementName=parentElementName}"
+                         Margin="20,5" Background="#FFE88C71"/>
+            <Button x:Name="clearButton" Content="Clear" Click="clearButton_Click" Width="80" Height="25" Margin="0,0,20,0" HorizontalAlignment="Right" />
+        </StackPanel>
+
+    </StackPanel>
+</Window>
