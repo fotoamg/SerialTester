@@ -81,6 +81,18 @@ namespace SerialWriter
             }
         }
 
+        private bool isRepeat;
+        public bool IsRepeat
+        {
+            get { return this.isRepeat; }
+            set
+            {
+                this.isRepeat = value;
+                OnPropertyChanged("IsRepeat");
+            }
+
+        }
+
         public bool Stop { get; set; }
 
       

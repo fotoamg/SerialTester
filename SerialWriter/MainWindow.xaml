@@ -20,6 +20,8 @@
             <TextBox x:Name="delayTextBox"  Text="{Binding Path=Delay}" Width="80" Height="20" Margin="0,0,10,0"/>
             <Button x:Name="replyButton" Content="Replay file" Width="80" Height="25" Margin="0,0,10,0" Click="replyButton_Click"  />
             <Button x:Name="stopButton" Content="Stop replay" Width="80" Height="25" Margin="0,0,10,0" Click="stopButton_Click" />
+            <CheckBox x:Name="repeatCheckBox" Content="Repeat Pck" Height="25" Margin="0,0,10,0" IsChecked="{Binding Path=IsRepeat, Mode=TwoWay}"/>
+
         </StackPanel>
         <StackPanel Orientation="Horizontal"  DockPanel.Dock="Top" Height="40">
             <TextBox x:Name="messageTextBox"  TextWrapping="Wrap" VerticalAlignment="Top" Width="600" Height="25" Margin="20,5,10,0"  />

@@ -28,7 +28,9 @@ namespace SerialWriter
     {
 
         private SerialPort port;
-        private FormData formData; 
+        private FormData formData;
+        private StringBuilder stringBuilder = new StringBuilder(200);
+        private long lastMillis = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 
         public MainWindow()
         {
@@ -37,7 +39,7 @@ namespace SerialWriter
             this.DataContext = formData;
             var portList = SerialPort.GetPortNames();
             formData.PortList = portList.Select(x => new PortData {Name = x}).ToArray();
-            formData.Delay = 400;
+            formData.Delay = 200;
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -68,7 +70,7 @@ namespace SerialWriter
                 System.Windows.Threading.DispatcherPriority.Normal,
                 (UpdateTheUI)delegate (string text)
                 {
-                    fileMessageTextBox.Text += text;
+                    fileMessageTextBox.Text = text;
                     fileMessageTextBox.ScrollToEnd();
                 }, message);
             }
@@ -78,6 +80,8 @@ namespace SerialWriter
             }
 
         }
+
+        
 
         private void ReadPort(SerialPort readPort)
         {
@@ -94,22 +98,21 @@ namespace SerialWriter
                 //Handle data
                 readPort.Read(readData, 0, readData.Length);
                 var reply = Encoding.ASCII.GetString(readData);
-
-                this.Dispatcher.BeginInvoke(
+                stringBuilder.Append(reply);
+                if (stringBuilder.Length > 190 || '\n'.Equals(reply) || '\r'.Equals(reply)
+                    || (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) > (lastMillis + 8000))
+                {
+                    this.Dispatcher.BeginInvoke(
                        System.Windows.Threading.DispatcherPriority.Normal,
                        (UpdateTheUI)delegate (string text)
-                       {
-                           replyTextBox.Text += text;
-                            replyTextBox.ScrollToEnd();
-                       }, reply);
-
-               /* formData.AppendReplyText(reply);
-                this.Dispatcher.Invoke(() =>
-                {
-                    //replyTextBox.Text += reply + "\n" + DateTime.Now. + "\n";
-                    replyTextBox.ScrollToEnd();
-                });*/
+                       {   replyTextBox.Text += text;
+                           replyTextBox.ScrollToEnd();
+                       }, stringBuilder.ToString());
+                    stringBuilder.Clear();
+                    lastMillis = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+                }
             }
+                
             if (readPort.BytesToRead > 0) ReadPort(readPort);
 
         }
@@ -151,16 +154,10 @@ namespace SerialWriter
                 else
                 {
                     lineCounter = 0;
-                    Thread.Sleep(delay);
-                    SendMessageToPort(message);
-
-                    //this.Dispatcher.BeginInvoke(
-                    //    System.Windows.Threading.DispatcherPriority.Normal,
-                    //    (UpdateTheUI) delegate(string text)
-                    //    {
-                    //        fileMessageTextBox.Text += text;
-                    //        fileMessageTextBox.ScrollToEnd();
-                    //    }, message);
+                    do {
+                        Thread.Sleep(delay);
+                        SendMessageToPort(message);
+                    } while (formData.IsRepeat == true);
 
                     message = "";
                 }
@@ -171,8 +168,8 @@ namespace SerialWriter
                 SendMessageToPort(message);
             }
 
-            file.Close();
 
+            file.Close();
 
         }
 
@@ -211,6 +208,8 @@ namespace SerialWriter
             Thread thrd = new Thread(() => WriteReply(formData.FileName));
             thrd.Start();
         }
+
+ 
     }
 
 
