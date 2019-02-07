@@ -16,23 +16,6 @@ namespace SerialWriter
             get { return (String.IsNullOrEmpty(this.FileName) ? "" : this.FileName.Substring(this.FileName.LastIndexOf("\\")+1)); }
            
         }
-        /*  private string replyText;
-
-          public string ReplyText
-          {
-              get { return this.replyText; }
-              set
-              {
-                  this.replyText = value;
-                  OnPropertyChanged("ReplyText");
-              }
-          }
-          public void AppendReplyText(String text)
-          {
-                  this.replyText += text;
-                  OnPropertyChanged("ReplyText");
-
-          }*/
 
         private PortData[] portList;
 

@@ -40,6 +40,27 @@ namespace SerialWriter
             var portList = SerialPort.GetPortNames();
             formData.PortList = portList.Select(x => new PortData {Name = x}).ToArray();
             formData.Delay = 200;
+            replyTextBox.Text = "\n          @@@@@@           @@@@@@\n" +
+                                "        @@@@@@@@@@       @@@@@@@@@@\n" +
+                                "      @@@@@@@@@@@@@@   @@@@@@@@@@@@@@\n" +
+                                "    @@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@\n" +
+                                "   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" +
+                                "  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" +
+                                "  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" +
+                                "  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" +
+                                "   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" +
+                                "    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" +
+                                "     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" +
+                                "      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" +
+                                "        @@@@@@@@@@@@@@@@@@@@@@@@@@@\n" +
+                                "          @@@@@@@@@@@@@@@@@@@@@@@\n" +
+                                "            @@@@@@@@@@@@@@@@@@@\n" +
+                                "              @@@@@@@@@@@@@@@\n" +
+                                "                @@@@@@@@@@@\n" +
+                                "                  @@@@@@@\n" +
+                                "                    @@@\n" +
+                                "                     @\n";
+
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -100,7 +121,7 @@ namespace SerialWriter
                 var reply = Encoding.ASCII.GetString(readData);
                 stringBuilder.Append(reply);
                 if (stringBuilder.Length > 190 || '\n'.Equals(reply) || '\r'.Equals(reply)
-                    || (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) > (lastMillis + 8000))
+                    || (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) > (lastMillis + 10000))
                 {
                     this.Dispatcher.BeginInvoke(
                        System.Windows.Threading.DispatcherPriority.Normal,

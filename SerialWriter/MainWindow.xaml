@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SerialWriter"
         mc:Ignorable="d"
-        Title="Serial Tester"  Width="900" Height="630">
+        Title="Serial Tester"  Width="900" Height="580">
     <StackPanel Orientation="Vertical">
         <StackPanel  Orientation="Horizontal"  HorizontalAlignment="Left" Height="50" Margin="0,0,0,0" VerticalAlignment="Top" Width="{Binding ActualWidth, ElementName=parentElementName}">
             <Label Content="Port:" Height="25" Margin="20,0,0,0"/>
@@ -20,7 +20,7 @@
             <TextBox x:Name="delayTextBox"  Text="{Binding Path=Delay}" Width="80" Height="20" Margin="0,0,10,0"/>
             <Button x:Name="replyButton" Content="Replay file" Width="80" Height="25" Margin="0,0,10,0" Click="replyButton_Click"  />
             <Button x:Name="stopButton" Content="Stop replay" Width="80" Height="25" Margin="0,0,10,0" Click="stopButton_Click" />
-            <CheckBox x:Name="repeatCheckBox" Content="Repeat Pck" Height="25" Margin="0,0,10,0" IsChecked="{Binding Path=IsRepeat, Mode=TwoWay}"/>
+            <CheckBox x:Name="repeatCheckBox" Content="Repeat Next" Height="25" Margin="0,0,10,0" IsChecked="{Binding Path=IsRepeat, Mode=TwoWay}"/>
 
         </StackPanel>
         <StackPanel Orientation="Horizontal"  DockPanel.Dock="Top" Height="40">
@@ -30,17 +30,17 @@
         </StackPanel>
         <StackPanel   Orientation="Vertical" Width="{Binding ActualWidth, ElementName=parentElementName}">
             <TextBox x:Name="fileMessageTextBox"  
-                     TextWrapping="Wrap" Height="200" 
+                     TextWrapping="Wrap" Height="100" 
                          ScrollViewer.VerticalScrollBarVisibility="Auto" 
                      Text="{Binding Path=ReplyText, Mode=OneWayToSource, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" 
                          Width="{Binding ActualWidth, ElementName=parentElementName}" 
-                         Background="#FF9ED6A6" Margin="20,5"/>
+                         Background="#FF9ED6A6" FontFamily="Courier New" Margin="20,5"/>
             <TextBox x:Name="replyTextBox"  
-                     TextWrapping="Wrap" Height="200"
+                     TextWrapping="Wrap" Height="300"
                      ScrollViewer.VerticalScrollBarVisibility="Auto" 
                      Text="{Binding Path=ReplyText, Mode=OneWayToSource, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" 
                          Width="{Binding ActualWidth, ElementName=parentElementName}"
-                         Margin="20,5" Background="#FFE88C71"/>
+                         Margin="20,5" Background="#FFE88C71" FontFamily="Courier New"/>
             <Button x:Name="clearButton" Content="Clear" Click="clearButton_Click" Width="80" Height="25" Margin="0,0,20,0" HorizontalAlignment="Right" />
         </StackPanel>
 
